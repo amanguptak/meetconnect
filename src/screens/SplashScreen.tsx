@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {resetAndNavigate} from '../utils/NavigationUtils';
-import { screenHeight, screenWidth } from '../utils/Constants';
+import { COLORS, screenHeight, screenWidth } from '../utils/Constants';
 
 interface SplashScreenProps {}
 
@@ -9,7 +9,7 @@ const SplashScreen = ({}: SplashScreenProps) => {
   useEffect(() => {
     const timerId = setTimeout(() => {
       resetAndNavigate('Home');
-    }, 2000);
+    }, 9000);
 
     return () => clearTimeout(timerId);
   }, []);
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'#fbefdc',
+  
+    backgroundColor:COLORS.background,
   },
   image:{
     width: screenWidth*0.7,

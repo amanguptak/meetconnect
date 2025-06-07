@@ -11,12 +11,13 @@ export const multiColor = [
   '#7B68EE',
 ];
 
-export const Colors = {
-  primary: '#007AFF',
-  background: '#fff',
-  text: '#131313',
-  theme: '#CF551F',
-  secondary: '#E5EBF5',
-  tertiary: '#3C75BE',
-  secondary_light: '#F6F7F9',
+export const COLORS = {
+  primary: '#5C4033',        // Espresso Brown
+  background: '#fbefdc',     // Cream
+  text: '#3E2723',           // Dark Roast (for high contrast)
+  theme: '#A67B5B',          // Caramel (accent)
+  secondary: '#D8B99B',      // Mocha Beige
+  tertiary: '#B79982',       // Light Tawny (mid-tone)
+  secondary_light: '#F2E8DC' // Soft Cream (lighter bg variant)
 };
+
