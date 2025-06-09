@@ -4,6 +4,8 @@ import {
   StackActions,
 } from '@react-navigation/native';
 
+//by help of these methods we can access navigatie and other functions feature outside our component which is not wrapped in naviation like in redux zustund or any where
+
 export const navigationRef = createNavigationContainerRef();
 
 export function navigate(routeName, params) {
