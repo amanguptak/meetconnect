@@ -91,7 +91,7 @@ export const WSProvider: FC<WSProviderProps> = ({ children }) => {
 export const useWSocket = ()=>{
    const  socketService = useContext(WSContext)
    if(!socketService){
-      throw new Error("useWSocket use in WSProvider")
+      throw new Error('useWSocket use in WSProvider')
    }
    return socketService
 }

@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text,StyleSheet,SafeAreaView } from 'react-native';
 
 interface HomeScreenProps {}
 
 const HomeScreen = ({}: HomeScreenProps) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>HomeScreen</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
