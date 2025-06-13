@@ -14,3 +14,28 @@ export interface UserStore {
   removeSession: (sessionId: string) => void;
   clearSession: () => void;
 }
+
+export interface Participant {
+  userId: string;
+  micOn?: boolean;
+  videoOn?: boolean;
+  streamURL?: string;
+}
+
+export interface MeetStore {
+  sessionId: string | null;
+  participants: Participant[];
+  chatMessages: any[]; // Optional: define this better
+  micOn: boolean;
+  videoOn: boolean;
+
+  setSessionId: (id: string) => void;
+  clearSessionId: () => void;
+
+  addParticipant: (participant: Participant) => void;
+  removeParticipant: (participantId: string) => void;
+  updateParticipantMedia: (participant: Pick<Participant, 'userId' | 'micOn' | 'videoOn'>) => void;
+  updateParticipantStream: (userId: string, streamURL: string) => void;
+
+  resetMeetingStore: () => void;
+}

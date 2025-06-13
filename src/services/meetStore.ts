@@ -1,15 +1,60 @@
-import { mmkvStorage } from "./storage";
+import { create } from 'zustand';
+import { MeetStore, Participant } from '../../types/storetype'; // adjust path if needed
 
-import {create} from "zustand"
-import {createJSONStorage, persist} from "zustand/middleware"
+export const useMeetStore = create<MeetStore>()((set, get) => ({
+  sessionId: null,
+  participants: [],
+  chatMessages: [],
+  micOn: false,
+  videoOn: false,
 
+  // Set or clear the active session
+  setSessionId: (id: string) => set({ sessionId: id }),
+  clearSessionId: () => set({ sessionId: null }),
 
-export const useUserStore = create()(
-    persist(
-        (set,get)=>({}),
-        {
-            name:'live-meet-storage',
-            storage:createJSONStorage(()=>mmkvStorage)
-        }
-    )
-)
+  // Manage participants
+  addParticipant: (participant: Participant) => {
+    const { participants } = get();
+    const alreadyExists = participants.some(p => p.userId === participant.userId);
+    if (!alreadyExists) {
+      set({ participants: [...participants, participant] });
+    }
+  },
+
+  removeParticipant: (participantId: string) => {
+    const { participants } = get();
+    set({
+      participants: participants.filter(p => p.userId !== participantId),
+    });
+  },
+
+  updateParticipantMedia: (updated: Pick<Participant, 'userId' | 'micOn' | 'videoOn'>) => {
+    const { participants } = get();
+    set({
+      participants: participants.map(p =>
+        p.userId === updated.userId
+          ? { ...p, micOn: updated.micOn, videoOn: updated.videoOn }
+          : p
+      ),
+    });
+  },
+
+  updateParticipantStream: (userId: string, streamURL: string) => {
+    const { participants } = get();
+    set({
+      participants: participants.map(p =>
+        p.userId === userId ? { ...p, streamURL } : p
+      ),
+    });
+  },
+
+  // Optional: reset the entire store (e.g., on leave)
+  resetMeetingStore: () =>
+    set({
+      sessionId: null,
+      participants: [],
+      chatMessages: [],
+      micOn: false,
+      videoOn: false,
+    }),
+}));
