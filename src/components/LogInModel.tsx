@@ -27,7 +27,7 @@ const LogInModel = ({visible,onClose}: LogInModelProps) => {
   const handleSave = ()=>{
     if(username && photoUrl){
       setUser({
-        id:uuidv4,
+        id: uuidv4(),
         name:username,
         photoUrl:photoUrl
       })
