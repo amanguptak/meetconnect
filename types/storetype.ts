@@ -2,6 +2,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  photoUrl:string;
   // Add any other fields relevant to your user
 }
 

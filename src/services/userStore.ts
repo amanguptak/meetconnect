@@ -2,7 +2,7 @@ import {mmkvStorage} from './storage';
 
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
-import {UserStore} from '../../types/storetype';
+import { UserStore } from '../../types/storetype';
 
 export const useUserStore = create<UserStore>()(
   persist(

@@ -1,8 +1,9 @@
 import {Text, View, StyleSheet} from 'react-native';
-import {UserStore} from '../../types/storetype';
+// import {UserStore} from '../../types/storetype';
 import {useEffect, useState} from 'react';
-import {useUserStore} from '../services/meetStore';
+
 import LogInModel from './LogInModel';
+import { useUserStore } from '../services/userStore';
 
 interface HOmeHeaderProps {}
 
