@@ -35,7 +35,7 @@ export const homeStyles = StyleSheet.create({
     buttonText: {
       color: '#fff',
       fontSize: RFValue(12),
-      fontFamily: 'Roboto-Medium',
+      fontFamily: 'Poppins-Medium',
     },
     absoluteButton: {
       padding: 15,
@@ -71,12 +71,12 @@ export const homeStyles = StyleSheet.create({
       marginHorizontal: 10,
     },
     sessionTitle: {
-      fontFamily: 'Roboto-Medium',
+      fontFamily: 'Poppins-Medium',
       fontSize: RFValue(14),
       color: COLORS.text,
     },
     sessionTime: {
-      fontFamily: 'Roboto-Regular',
+      fontFamily: 'Poppins-Regular',
       fontSize: RFValue(12),
       color: COLORS.text,
       opacity: 0.7,
@@ -89,7 +89,7 @@ export const homeStyles = StyleSheet.create({
     },
     joinButtonText: {
       color: '#fff',
-      fontFamily: 'Roboto-Medium',
+      fontFamily: 'Poppins-Medium',
       fontSize: RFValue(12),
     },
   });

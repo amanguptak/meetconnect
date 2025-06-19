@@ -12,12 +12,18 @@ export const multiColor = [
 ];
 
 export const COLORS = {
-  primary: '#5C4033',        // Espresso Brown
-  background: '#fbefdc',     // Cream
-  text: '#3E2723',           // Dark Roast (for high contrast)
-  theme: '#A67B5B',          // Caramel (accent)
-  secondary: '#D8B99B',      // Mocha Beige
-  tertiary: '#B79982',       // Light Tawny (mid-tone)
-  secondary_light: '#F2E8DC' // Soft Cream (lighter bg variant)
+  primary: '#5C4033',         // Espresso Brown
+  background: '#fbefdc',      // Cream
+  text: '#3E2723',            // Dark Roast
+  theme: '#A67B5B',           // Caramel
+  secondary: '#D8B99B',       // Mocha Beige
+  tertiary: '#B79982',        // Light Tawny
+  secondary_light: '#F2E8DC', // Soft Cream
+
+  primary_20: 'rgba(92, 64, 51, 0.2)', // 20% transparent primary
+
+  white: '#ffffff',           // ✅ for universal use
+  black: '#000000',           // ✅ for shadows
 };
+
 

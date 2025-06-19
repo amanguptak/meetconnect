@@ -1,35 +1,58 @@
-import {Text, View, StyleSheet} from 'react-native';
-// import {UserStore} from '../../types/storetype';
-import {useEffect, useState} from 'react';
-
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Platform,
+  StatusBar,
+  SafeAreaView,
+} from 'react-native';
+import { VideoIcon } from 'lucide-react-native';
 import LogInModel from './LogInModel';
 import { useUserStore } from '../services/userStore';
+import { headerStyles } from '../styles/headerStyles';
 
-interface HOmeHeaderProps {}
-
-const HOmeHeader = ({}: HOmeHeaderProps) => {
+const HomeHeader = () => {
   const [visible, setVisible] = useState(false);
-  const {user} = useUserStore();
+  const { user } = useUserStore();
 
   useEffect(() => {
-    const checkUserName = () => {
-      const storedName = user?.name;
-      if (!storedName) {
-        setVisible(true);
-      }
-    };
-    checkUserName();
-  }, []);
+    if (!user?.name) setVisible(true);
+  }, [user?.name]);
+
   return (
-    <View style={styles.container}>
-      <Text>HOmeHeader</Text>
-      <LogInModel onClose={setVisible} visible={visible} />
-    </View>
+    <>
+      <SafeAreaView style={headerStyles.safeContainer}>
+        <View style={headerStyles.container}>
+          <View style={headerStyles.leftSection}>
+            {user?.photoUrl ? (
+              <Image source={{ uri: user.photoUrl }} style={headerStyles.avatar} />
+            ) : (
+              <View style={headerStyles.avatarPlaceholder}>
+                <Text style={headerStyles.placeholderLetter}>
+                  {user?.name?.[0]?.toUpperCase() || 'U'}
+                </Text>
+              </View>
+            )}
+            <View style={headerStyles.textContainer}>
+              <Text style={headerStyles.appTitle}>MeetConnect</Text>
+              <Text style={headerStyles.usernameText}>{user?.name || 'Guest'}</Text>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={headerStyles.callButton}
+            onPress={() => setVisible((prev) => !prev)}
+          >
+            <VideoIcon size={20} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+
+      <LogInModel visible={visible} onClose={() => setVisible(false)} />
+    </>
   );
 };
 
-export default HOmeHeader;
-
-const styles = StyleSheet.create({
-  container: {},
-});
+export default HomeHeader;

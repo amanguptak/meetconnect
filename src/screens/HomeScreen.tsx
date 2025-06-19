@@ -1,13 +1,14 @@
-import * as React from 'react';
-import { Text,StyleSheet,SafeAreaView } from 'react-native';
+
+import {StyleSheet,SafeAreaView, View } from 'react-native';
+import HomeHeader from '../components/HomeHeader';
 
 interface HomeScreenProps {}
 
 const HomeScreen = ({}: HomeScreenProps) => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>HomeScreen</Text>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <HomeHeader/>
+    </View>
   );
 };
 
