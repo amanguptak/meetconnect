@@ -40,6 +40,12 @@ const joinViaSessionId = async (id: string) => {
         userId: user?.id,
         sessionId: removeHyphens(id),
       });
+
+      // If the meeting is live, you emit a socket event with both your user ID and the
+      //  hyphens-stripped session ID, record that ID in your user store’s history, tell the meet 
+      //  store which session you’re entering, add your own participant object to the meet store, and
+      //   finally navigate to the “Prepare” screen where the actual meeting setup continues.
+
       addSession(id);
       setSessionId(removeHyphens(id));
       addParticipant(createParticipantFromUser(user));
