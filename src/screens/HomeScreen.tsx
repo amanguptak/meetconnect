@@ -1,4 +1,11 @@
-import {SafeAreaView, View, Text, TouchableOpacity, Alert} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  FlatList,
+} from 'react-native';
 import {homeStyles} from '../styles/homeStyles';
 import HomeHeader from '../components/HomeHeader';
 import {Calendar, Video} from 'lucide-react-native';
@@ -10,15 +17,13 @@ import {useWSocket} from '../services/api/WSContext';
 import {addHyphens, removeHyphens} from '../utils/Helpers';
 import {useMeetStore} from '../services/meetStore';
 import {RFValue} from 'react-native-responsive-fontsize';
-import { FlatList } from 'react-native-gesture-handler';
-import { createParticipantFromUser } from '../utils/formatter';
 
-
-
+import {createParticipantFromUser} from '../utils/formatter';
+import EmptyState from '../components/EmptyFound';
 
 const HomeScreen = () => {
   const {user, sessions, addSession, removeSession} = useUserStore();
-  const {addParticipant, removeParticipant,setSessionId} = useMeetStore();
+  const {addParticipant, removeParticipant, setSessionId} = useMeetStore();
 
   const {emit} = useWSocket();
   const handleNavigation = () => {
@@ -29,7 +34,7 @@ const HomeScreen = () => {
     navigate('JoinScreen');
   };
 
-const joinViaSessionId = async (id: string) => {
+  const joinViaSessionId = async (id: string) => {
     if (!user?.name) {
       Alert.alert('Login before joining the meeting');
       return navigate('Home');
@@ -42,7 +47,7 @@ const joinViaSessionId = async (id: string) => {
       });
 
       // If the meeting is live, you emit a socket event with both your user ID and the
-      //  hyphens-stripped session ID, record that ID in your user store’s history, tell the meet 
+      //  hyphens-stripped session ID, record that ID in your user store’s history, tell the meet
       //  store which session you’re entering, add your own participant object to the meet store, and
       //   finally navigate to the “Prepare” screen where the actual meeting setup continues.
 
@@ -59,7 +64,7 @@ const joinViaSessionId = async (id: string) => {
     }
   };
 
-  const renderSessions =({ item }: { item: string }) => {
+  const renderSessions = ({item}: {item: string}) => {
     return (
       <View style={homeStyles.sessionContainer}>
         <Calendar size={RFValue(20)} color={COLORS.secondary_light} />
@@ -82,15 +87,15 @@ const joinViaSessionId = async (id: string) => {
     <SafeAreaView style={homeStyles.safeArea}>
       <View style={homeStyles.container}>
         <HomeHeader />
-          <FlatList
-            data={sessions}
-            renderItem={renderSessions}
-            keyExtractor={(item) => item}
-            contentContainerStyle={{padding:20}}
-            ListEmptyComponent={<>
-
-            </>}
-          />
+        <FlatList
+          data={sessions}
+          renderItem={renderSessions}
+          keyExtractor={item => item}
+          contentContainerStyle={{padding: 20}}
+          ListEmptyComponent={
+            <EmptyState message="No sessions yet join a meeting to get started!" />
+          }
+        />
         <TouchableOpacity
           style={homeStyles.absoluteButton}
           onPress={handleNavigation}>
@@ -103,7 +108,6 @@ const joinViaSessionId = async (id: string) => {
 };
 
 export default HomeScreen;
-
 
 // code explanation
 
