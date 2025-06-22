@@ -30,7 +30,7 @@ export interface MeetStore {
   micOn: boolean;
   videoOn: boolean;
 
-  setSessionId: (id: string) => void;
+  setSessionId: (id: string | null) => void;
   clearSessionId: () => void;
 
   addParticipant: (participant: Participant) => void;

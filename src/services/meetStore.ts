@@ -9,7 +9,7 @@ export const useMeetStore = create<MeetStore>()((set, get) => ({
   videoOn: false,
 
   // Set or clear the active session
-  setSessionId: (id: string) => set({ sessionId: id }),
+  setSessionId: (id: string | null) => set({ sessionId: id }),
   clearSessionId: () => set({ sessionId: null }),
 
   // Manage participants
