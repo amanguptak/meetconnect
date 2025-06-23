@@ -48,6 +48,15 @@ export const useMeetStore = create<MeetStore>()((set, get) => ({
     });
   },
 
+  toggle : (type:string)=>{
+      if(type=="mic"){
+        set(state=>({micOn: !state.micOn}))
+      }
+      if(type=="video"){
+        set((state)=>({videoOn:!state.videoOn}))
+      }
+  },
+
   // Optional: reset the entire store (e.g., on leave)
   resetMeetingStore: () =>
     set({

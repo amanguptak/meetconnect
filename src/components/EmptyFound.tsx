@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: RFValue(16),
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
     color: COLORS.text,
     textAlign: 'center',
-    fontWeight:'600',
+    fontWeight:'400',
   },
 });
 
