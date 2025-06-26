@@ -16,11 +16,10 @@ export const createSession = async () => {
 
 export const checkSession = async (id: string) => {
   try {
-    const res = await axios.post(`${BASE_URL}/is-alive?sessionId=${id}`);
-    return res?.data?.isAlive;
+    const res = await axios.get(`${BASE_URL}/is-alive?sessionId=${id}`);
+    return !!res?.data?.isAlive; // convert document to true/false
   } catch (err) {
     console.log('Session error at check', err);
-
     return false;
   }
 };

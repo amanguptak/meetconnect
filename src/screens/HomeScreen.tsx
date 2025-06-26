@@ -64,24 +64,29 @@ const HomeScreen = () => {
     }
   };
 
-  const renderSessions = ({item}: {item: string}) => {
-    return (
-      <View style={homeStyles.sessionContainer}>
-        <Calendar size={RFValue(20)} color={COLORS.secondary_light} />
-        <View style={homeStyles.sessionTextContainer}>
-          <Text style={homeStyles.sessionTitle}>{addHyphens(item)}</Text>
-          <Text style={homeStyles.sessionTitle}>
-            Join and Connect with Loved Ones.
-          </Text>
-        </View>
-        <TouchableOpacity
-          style={homeStyles.joinButton}
-          onPress={() => joinViaSessionId(item)}>
-          <Text style={homeStyles.joinButtonText}>Join</Text>
-        </TouchableOpacity>
+ const renderSessions = ({ item }: { item: string }) => {
+  return (
+    <View style={homeStyles.sessionContainer}>
+      <View style={homeStyles.sessionIcon}>
+        <Calendar size={RFValue(18)} color={COLORS.primary} />
       </View>
-    );
-  };
+
+      <View style={homeStyles.sessionTextContainer}>
+        <Text style={homeStyles.sessionTitle}>{addHyphens(item)}</Text>
+        <Text style={homeStyles.sessionSubtitle}>
+          Join and connect with your people.
+        </Text>
+      </View>
+
+      <TouchableOpacity
+        style={homeStyles.joinButton}
+        onPress={() => joinViaSessionId(item)}>
+        <Text style={homeStyles.joinButtonText}>Join</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 
   return (
     <SafeAreaView style={homeStyles.safeArea}>

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLORS, screenHeight, screenWidth } from '../utils/Constants';
+import { COLORS } from '../utils/Constants';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 export const homeStyles = StyleSheet.create({
@@ -12,7 +12,7 @@ export const homeStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.background,
     padding: 10,
-    paddingBottom: 80, // reserve space for floating button
+    paddingBottom: 80,
   },
 
   title: {
@@ -33,13 +33,21 @@ export const homeStyles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  img: {
-    width: screenWidth * 0.5,
-    height: screenHeight * 0.3,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-    margin: 15,
-    marginTop: screenHeight * 0.1,
+  absoluteButton: {
+    position: 'absolute',
+    bottom: 25,
+    right: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    backgroundColor: COLORS.primary,
+    shadowColor: COLORS.black,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 10,
   },
 
   buttonText: {
@@ -49,61 +57,59 @@ export const homeStyles = StyleSheet.create({
     marginLeft: 8,
   },
 
-  absoluteButton: {
-    position: 'absolute',
-    bottom: 25,
-    right: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 18,
-    borderRadius: 30,
-    backgroundColor: COLORS.primary,
-    shadowColor: COLORS.black,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 10, // Android shadow
-  },
-
   sessionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
-    elevation: 2,
-    padding: 15,
-    marginVertical: 8,
+    backgroundColor: COLORS.secondary_light,
+    borderRadius: 16,
+    padding: 16,
+    marginVertical: 10,
+    marginHorizontal: 5,
+    shadowColor: COLORS.black,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+
+  sessionIcon: {
+    backgroundColor: COLORS.secondary,
+    padding: 10,
     borderRadius: 10,
     shadowColor: COLORS.black,
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
-    shadowRadius: 16,
-    shadowOffset: { width: 1, height: 1 },
-    marginHorizontal: 5,
+    shadowRadius: 6,
   },
 
   sessionTextContainer: {
     flex: 1,
-    marginHorizontal: 10,
+    marginHorizontal: 12,
   },
 
   sessionTitle: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Poppins-SemiBold',
     fontSize: RFValue(14),
     color: COLORS.text,
   },
 
-  sessionTime: {
+  sessionSubtitle: {
     fontFamily: 'Poppins-Regular',
     fontSize: RFValue(12),
-    color: COLORS.text,
-    opacity: 0.7,
+    color: COLORS.tertiary,
+    marginTop: 3,
   },
 
   joinButton: {
     backgroundColor: COLORS.theme,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+    shadowColor: COLORS.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 4,
   },
 
   joinButtonText: {

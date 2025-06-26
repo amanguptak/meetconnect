@@ -1,31 +1,40 @@
-import {Text, View, TouchableOpacity, TextInput, Alert} from 'react-native';
-import {joinStyles} from '../styles/joinStyles';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ChevronLeft, EllipsisVertical, Video} from 'lucide-react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {goBack, navigate} from '../utils/NavigationUtils';
-import {COLORS} from '../utils/Constants';
 import LinearGradient from 'react-native-linear-gradient';
 import {useState} from 'react';
+
+import {joinStyles} from '../styles/joinStyles';
+import {COLORS, multiColor} from '../utils/Constants';
+import {goBack, navigate} from '../utils/NavigationUtils';
 import {useWSocket} from '../services/api/WSContext';
 import {useMeetStore} from '../services/meetStore';
 import {useUserStore} from '../services/userStore';
 import {checkSession, createSession} from '../services/api/session';
 import {removeHyphens} from '../utils/Helpers';
+import { createParticipantFromUser } from '../utils/formatter';
 
-interface JoinScreenProps {}
-
-const JoinScreen = ({}: JoinScreenProps) => {
+const JoinScreen = () => {
   const [code, setCode] = useState('');
   const {emit} = useWSocket();
-  const {addParticipant, setSessionId, removeParticipant} = useMeetStore();
+  const {setSessionId, addParticipant, removeParticipant} = useMeetStore();
   const {user, addSession, removeSession} = useUserStore();
+
   const createNewMeet = async () => {
     const sessionId = await createSession();
     if (sessionId) {
       setSessionId(sessionId);
       addSession(sessionId);
-      // addSessionId
       emit('prepare-session', {
         userId: user?.id,
         sessionId,
@@ -33,68 +42,94 @@ const JoinScreen = ({}: JoinScreenProps) => {
       navigate('PrepareScreen');
     }
   };
-  const joinViaSessionId = async () => {
-    const isAvailable = await checkSession(code);
-    if (isAvailable) {
-      emit('prepare-session', {
-        userId: user?.id,
-        sessionId: removeHyphens(code),
-      });
-      setSessionId(code);
-      addSession(code);
-      navigate('PrepareScreen');
-    } else {
-      removeSession(code);
-      removeParticipant(code);
-      setCode(''), Alert.alert('There is no meeting found!');
-    }
-  };
-  return (
-    <View style={joinStyles.container}>
-      <SafeAreaView />
-      <View style={joinStyles.headerContainer}>
-        <ChevronLeft
-          size={RFValue(18)}
-          onPress={() => goBack()}
-          color={COLORS.text}
-        />
-        <Text style={joinStyles.headerText}>Connect and Meet</Text>
 
-        <EllipsisVertical size={RFValue(18)} color={COLORS.text} />
-      </View>
-      <LinearGradient
-        colors={['#007Df', '#B6C8Ef']}
-        style={joinStyles.gradientButton}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}>
-        <TouchableOpacity
-          style={joinStyles.button}
-          activeOpacity={0.7}
-          onPress={createNewMeet}>
-          <Video size={RFValue(22)} color="#ffff" />
-          <Text style={joinStyles.buttonText}>Create New Meet</Text>
-        </TouchableOpacity>
-      </LinearGradient>
-      <Text style={joinStyles.orText}>OR</Text>
-      <View style={joinStyles.inputContainer}>
-        <Text style={joinStyles.labelText}>
-          Please enter the code provided by the host
-        </Text>
-        <TextInput
-          style={joinStyles.inputBox}
-          value={code}
-          onChangeText={setCode}
-          returnKeyLabel="Join"
-          returnKeyType="join"
-          onSubmitEditing={joinViaSessionId}
-          placeholder="Example: akg-lkg-xyz"
-          placeholderTextColor="#888"
-        />
-        <Text style={joinStyles.noteText}>
-          Note:This meeting is secured with cloud encryption but not end to end.
-        </Text>
-      </View>
-    </View>
+ const joinViaSessionId = async (id: string) => {
+  if (!user?.name) {
+    Alert.alert('Login before joining the meeting');
+    return navigate('Home');
+  }
+
+  const cleanId = removeHyphens(id); 
+ 
+
+  const isAvailable = await checkSession(cleanId);
+
+  if (isAvailable) {
+    console.log('Is session available:', isAvailable);
+    emit('prepare-session', {
+      userId: user?.id,
+      sessionId: cleanId,
+    });
+
+    addSession(id); // keep the displayed version with hyphens
+    setSessionId(cleanId); // store clean version
+    addParticipant(createParticipantFromUser(user));
+
+    navigate('PrepareScreen');
+  } else {
+    removeSession(id);
+    setSessionId(null);
+    removeParticipant(user.id);
+    Alert.alert('There is no meeting found');
+  }
+};
+
+
+  return (
+    <SafeAreaView style={joinStyles.container}>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          {/* Header */}
+          <View style={joinStyles.headerContainer}>
+            <ChevronLeft
+              size={RFValue(20)}
+              color={COLORS.text}
+              onPress={goBack}
+            />
+            <Text style={joinStyles.headerText}>Connect and Meet</Text>
+            <EllipsisVertical size={RFValue(20)} color={COLORS.text} />
+          </View>
+
+          {/* Create Meeting Button */}
+          <LinearGradient
+            colors={multiColor.filter(Boolean)}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 1}}
+            style={joinStyles.gradientButton}>
+            <TouchableOpacity
+              style={joinStyles.button}
+              activeOpacity={0.8}
+              onPress={createNewMeet}>
+              <Video size={RFValue(22)} color={COLORS.white} />
+              <Text style={joinStyles.buttonText}>Create New Meet</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+
+          <Text style={joinStyles.orText}>OR</Text>
+
+          {/* Join via Code */}
+          <View style={joinStyles.inputContainer}>
+            <Text style={joinStyles.labelText}>
+              Enter code provided by the host:
+            </Text>
+            <TextInput
+              style={joinStyles.inputBox}
+              value={code}
+              onChangeText={setCode}
+              returnKeyType="done"
+             onSubmitEditing={() => joinViaSessionId(code)} 
+              placeholder="e.g. : akg-lkg-xyz"
+              placeholderTextColor={COLORS.tertiary}
+            />
+            <Text style={joinStyles.noteText}>
+              Note: This meeting is cloud-encrypted but not end-to-end secure.
+            </Text>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

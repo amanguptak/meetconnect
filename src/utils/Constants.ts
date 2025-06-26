@@ -3,13 +3,11 @@ import {Dimensions} from 'react-native';
 export const screenHeight = Dimensions.get('screen').height;
 export const screenWidth = Dimensions.get('screen').width;
 export const multiColor = [
-  '#0B3D91',
-  '#1E4DFF',
-  '#104E8B',
-  '#4682B4',
-  '#6A5ACD',
-  '#7B68EE',
+  '#5C4033',  // Espresso Brown (primary)
+  '#A67B5B',  // Caramel (theme)
+  '#D8B99B',  // Mocha Beige (secondary)
 ];
+
 
 export const COLORS = {
   primary: '#5C4033',         // Espresso Brown
