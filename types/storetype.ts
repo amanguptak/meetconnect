@@ -16,27 +16,43 @@ export interface UserStore {
   clearSession: () => void;
 }
 
+export type SessionInfoPayload = {
+  participants: Participant[];
+};
+
+
 export interface Participant {
+  id: string;
+  name: string;
   userId: string;
+  photoUrl?: string;
   micOn?: boolean;
   videoOn?: boolean;
-  streamURL?: string;
+
 }
 
 export interface MeetStore {
   sessionId: string | null;
   participants: Participant[];
-  chatMessages: any[]; // Optional: define this better
+  chatMessages: any[];
   micOn: boolean;
   videoOn: boolean;
 
+  // setters
   setSessionId: (id: string | null) => void;
   clearSessionId: () => void;
 
+  // participant management
   addParticipant: (participant: Participant) => void;
   removeParticipant: (participantId: string) => void;
-  updateParticipantMedia: (participant: Pick<Participant, 'userId' | 'micOn' | 'videoOn'>) => void;
+  updateParticipantMedia: (
+    updated: Pick<Participant, 'userId' | 'micOn' | 'videoOn'>
+  ) => void;
   updateParticipantStream: (userId: string, streamURL: string) => void;
 
+  // 🔄 toggle microphone / camera
+  toggleState: (type: 'mic' | 'video') => void;
+
+  // reset entire meeting state
   resetMeetingStore: () => void;
 }

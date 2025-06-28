@@ -9,8 +9,8 @@ export const useMeetStore = create<MeetStore>()((set, get) => ({
   videoOn: false,
 
   // Set or clear the active session
-  setSessionId: (id: string | null) => set({ sessionId: id }),
-  clearSessionId: () => set({ sessionId: null }),
+  setSessionId: (id: string | null) => set({ sessionId: id }), //addsessionId
+  clearSessionId: () => set({ sessionId: null }), //remove sessionId
 
   // Manage participants
   addParticipant: (participant: Participant) => {
@@ -48,7 +48,7 @@ export const useMeetStore = create<MeetStore>()((set, get) => ({
     });
   },
 
-  toggle : (type:string)=>{
+  toggleState : (type:string)=>{
       if(type=="mic"){
         set(state=>({micOn: !state.micOn}))
       }
